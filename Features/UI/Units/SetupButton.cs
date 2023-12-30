@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Maui.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,49 +35,52 @@ public class SetupButton : TemplatedView
     }
     private IconButton trashIcon;
     private IconButton OpenButton;
-    private Grid SlideArea;
     private Button EditButton;
+    private bool isEditMode = false;
     protected override void OnApplyTemplate()
     {
         base.OnApplyTemplate ();
         trashIcon = GetTemplateChild ("PART_TrashIcon") as IconButton;
-        SlideArea = GetTemplateChild ("PART_Area") as Grid;
         OpenButton = GetTemplateChild ("PART_OpenIcon") as IconButton;
         EditButton = GetTemplateChild ("PART_Edit") as Button;
         if (OpenButton is not null)
         {
+            var temptrashIconWidth = 200;
+            var tempEditIconWidth = 200;
             var gesture = new TapGestureRecognizer ();
             OpenButton.GestureRecognizers.Add (gesture);
 
             gesture.Tapped += (s, e) =>
             {
-                if(State == StateType.Normal)
+                if (State == StateType.Normal)
                 {
+                    trashIcon.TranslationX = temptrashIconWidth * 2;
+                    EditButton.TranslationX = tempEditIconWidth * 2;
+                    OpenButton.Rotation = -30;
+                    trashIcon.TranslateTo (0, 0, 350);
+                    EditButton.TranslateTo (0, 0, 350);
+                    OpenButton.RotateTo (0);
                     State = StateType.Setup;
 
-                    Animation animation = new Animation (e =>
-                    {
-                        SlideArea.TranslationX = e;
-                    }, this.Width * 2, 0)
-                    .WithConcurrent(new Animation(e=>
-                    {
-                        OpenButton.Rotation = e;
-                    },-30,0,Easing.Default));
-                    animation.Commit (this,"slide", easing: Easing.SpringOut);
                     return;
                 }
-                Animation animation2 = new Animation ((e) =>
+                Animation animation2 = new Animation ()
+                .WithConcurrent (new Animation ((e) =>
                 {
-                    SlideArea.TranslationX = e;
-                }, 0, this.Width * 2)
+                    trashIcon.TranslationX = e;
+                }, 0, temptrashIconWidth * 2))
+                .WithConcurrent (new Animation ((e) =>
+                {
+                    EditButton.TranslationX = e;
+                }, 0, tempEditIconWidth * 2))
                  .WithConcurrent (new Animation (e =>
                  {
                      OpenButton.Rotation = e;
-                 }, 0,-30, Easing.Default, ()=>
+                 }, 0, -30, Easing.Default, () =>
                  {
                      OpenButton.Rotation = 0;
                  }));
-                animation2.Commit (this, "slide2",16, 500, finished: (d, e) =>
+                animation2.Commit (this, "slide2", 16, 500, finished: (d, e) =>
                 {
                     State = StateType.Normal;
                 });
@@ -89,25 +93,31 @@ public class SetupButton : TemplatedView
             EditButton.GestureRecognizers.Add (gesture);
             gesture.Tapped += (s, e) =>
             {
-                Animation animation = new Animation ((e) =>
+                if(isEditMode == false)
                 {
-                    OpenButton.Opacity = e;
-                }, 1, 0, finished: () =>
+                    isEditMode = true;
+                    OpenButton.FadeTo (0, 200);
+                    trashIcon.FadeTo (0, 200);
+                    OpenButton.TranslateTo (-200, 100, 350);
+                    trashIcon.TranslateTo (0, 100, 350);
+                    EditButton.TranslateTo (50, 80, 500);
+                    //EditButton.Text = "Done";
+                }
+                else
                 {
-                    OpenButton.IsVisible = false;
-                    OpenButton.Opacity = 1;
-                })
-                .WithConcurrent (new Animation ((e) =>
-                {
-                    trashIcon.WidthRequest = e;
-                }, trashIcon.Width, 0, finished: () =>
-                {
-                    trashIcon.IsVisible = false;
+                    isEditMode = false;
+                    OpenButton.TranslationX = 0;
+                    OpenButton.FadeTo (1, 200);
+                    State = StateType.Normal;
+                    OpenButton.TranslateTo (0, 0, 350);
                     trashIcon.Opacity = 1;
-                }));
-                animation.Commit (this, "aa");
-                EditCommand?.Execute (null);
-                SlideArea.TranslateTo (50, 100);
+                    trashIcon.TranslationX = 0;
+                    trashIcon.TranslationY = 0;
+                    EditButton.TranslationX = 0;
+                    EditButton.TranslationY = 0;
+                    //EditButton.Text = "Edit";
+                }
+                EditCommand?.Execute (isEditMode);
             };
         }
     }

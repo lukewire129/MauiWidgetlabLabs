@@ -16,40 +16,41 @@
                         HeightRequest="{TemplateBinding HeightRequest}"
                         Stroke="LightGray"
                         StrokeThickness="0.5"
-                        VerticalOptions="Center"
                         WidthRequest="350">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
 
                         <Grid ColumnDefinitions="100, *" RowDefinitions="auto">
-                            <Image Source="apple.png" WidthRequest="100" />
-                            <Grid
+                            <Image
+                                Source="apple.png"
+                                VerticalOptions="StartAndExpand"
+                                WidthRequest="100" />
+                            <Label
                                 Grid.Column="1"
-                                HorizontalOptions="Start"
+                                VerticalOptions="StartAndExpand"
                                 WidthRequest="200">
-                                <Label VerticalOptions="Center">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span
-                                                FontSize="20"
-                                                Text="Lunch"
-                                                TextColor="#d7d7d7" />
-                                            <Span Text="&#10;" />
-                                            <Span
-                                                FontAttributes="Bold"
-                                                FontSize="30"
-                                                Text="APPLE"
-                                                TextColor="#7b7b7b" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                            </Grid>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span
+                                            FontSize="20"
+                                            Text="Lunch"
+                                            TextColor="#d7d7d7" />
+                                        <Span Text="&#10;" />
+                                        <Span
+                                            FontAttributes="Bold"
+                                            FontSize="30"
+                                            Text="APPLE"
+                                            TextColor="#7b7b7b" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
                             <units:SetupButton
                                 x:Name="PART_Setup"
                                 Grid.Column="1"
-                                EditCommand="{TemplateBinding}"
-                                HorizontalOptions="End" />
+                                Background="Red"
+                                HorizontalOptions="End"
+                                VerticalOptions="CenterAndExpand" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
