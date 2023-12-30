@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="MauiWidgetlabLabs.Features.Themes.Units.FoodBox"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:units="clr-namespace:MauiWidgetlabLabs.Features.UI.Units">
+
+    <Style TargetType="{x:Type units:FoodBox}">
+        <Setter Property="HeightRequest" Value="100" />
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border
+                        Padding="5"
+                        BackgroundColor="White"
+                        HeightRequest="{TemplateBinding HeightRequest}"
+                        Stroke="LightGray"
+                        StrokeThickness="0.5"
+                        VerticalOptions="Center"
+                        WidthRequest="350">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="100, *" RowDefinitions="auto">
+                            <Image Source="apple.png" WidthRequest="100" />
+                            <Grid
+                                Grid.Column="1"
+                                HorizontalOptions="Start"
+                                WidthRequest="200">
+                                <Label VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span
+                                                FontSize="20"
+                                                Text="Lunch"
+                                                TextColor="#d7d7d7" />
+                                            <Span Text="&#10;" />
+                                            <Span
+                                                FontAttributes="Bold"
+                                                FontSize="30"
+                                                Text="APPLE"
+                                                TextColor="#7b7b7b" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Grid>
+                            <units:SetupButton
+                                x:Name="PART_Setup"
+                                Grid.Column="1"
+                                EditCommand="{TemplateBinding}"
+                                HorizontalOptions="End" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
