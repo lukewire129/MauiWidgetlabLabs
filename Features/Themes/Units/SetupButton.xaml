@@ -6,58 +6,52 @@
     xmlns:units="clr-namespace:MauiWidgetlabLabs.Features.UI.Units">
     <ControlTemplate x:Key="template">
         <Grid
-            Background="Transparent"
-            ColumnDefinitions="auto, auto, auto"
+            Margin="{TemplateBinding Margin}"
+            ColumnDefinitions="auto, auto"
             ColumnSpacing="8"
-            RowDefinitions="auto">
-            <units:IconButton
-                x:Name="PART_TrashIcon"
-                Grid.Column="0"
-                Background="#fff3f5"
-                IsVisible="false"
-                PathColor="Red  "
-                PathData="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z"
-                X="-2"
-                Y="12">
-                <units:IconButton.Shadow>
+            HeightRequest="{TemplateBinding HeightRequest}"
+            VerticalOptions="{TemplateBinding VerticalOptions}">
+            <Grid
+                x:Name="PART_SlidArea"
+                BackgroundColor="White"
+                ColumnDefinitions="*, *"
+                IsVisible="False">
+                <Grid.Shadow>
                     <Shadow
                         Brush="White"
                         Opacity="0.7"
-                        Offset="-20, -0" />
-                </units:IconButton.Shadow>
-                <units:IconButton.Triggers>
+                        Offset="-20, 0" />
+                </Grid.Shadow>
+                <Grid.Triggers>
                     <DataTrigger
                         Binding="{Binding State, Source={RelativeSource Mode=TemplatedParent}}"
-                        TargetType="{x:Type units:IconButton}"
+                        TargetType="{x:Type Grid}"
                         Value="Setup">
                         <Setter Property="IsVisible" Value="true" />
                     </DataTrigger>
-                </units:IconButton.Triggers>
-            </units:IconButton>
-            <Button
-                x:Name="PART_Edit"
-                Grid.Column="1"
-                Background="#eeedef"
-                CornerRadius="14"
-                FontAttributes="Bold"
-                HeightRequest="40"
-                IsVisible="false"
-                Text="Edit"
-                TextColor="#7b7b7b"
-                WidthRequest="70">
-                <Button.Triggers>
-                    <DataTrigger
-                        Binding="{Binding State, Source={RelativeSource Mode=TemplatedParent}}"
-                        TargetType="{x:Type Button}"
-                        Value="Setup">
-                        <Setter Property="IsVisible" Value="true" />
-                    </DataTrigger>
-                </Button.Triggers>
-            </Button>
-
+                </Grid.Triggers>
+                <units:IconButton
+                    x:Name="PART_TrashIcon"
+                    Grid.Column="0"
+                    Background="#fff3f5"
+                    PathColor="Red"
+                    PathData="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z"
+                    X="-2"
+                    Y="12" />
+                <Button
+                    x:Name="PART_Edit"
+                    Grid.Column="1"
+                    Background="#eeedef"
+                    CornerRadius="14"
+                    FontAttributes="Bold"
+                    HeightRequest="40"
+                    Text="Edit"
+                    TextColor="#7b7b7b"
+                    WidthRequest="70" />
+            </Grid>
             <units:IconButton
                 x:Name="PART_OpenIcon"
-                Grid.Column="2"
+                Grid.Column="1"
                 Background="#eeedef"
                 PathColor="#bfbfbf"
                 PathData="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z"

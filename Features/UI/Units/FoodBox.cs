@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace MauiWidgetlabLabs.Features.UI.Units;
+﻿namespace MauiWidgetlabLabs.Features.UI.Units;
 
 public class FoodBox : TemplatedView
 {
@@ -36,17 +28,5 @@ public class FoodBox : TemplatedView
                 .Commit (this, "height", length: 350);
             }
         });
-    }
-
-    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        base.OnPropertyChanged (propertyName);
-
-        if(propertyName == "HeightRequest")
-        {
-            if (SetupButton == null)
-                return;
-            SetupButton.HeightRequest = HeightRequest;
-        }
     }
 }
